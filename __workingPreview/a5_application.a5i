@@ -326,7 +326,7 @@ DIM responseHeaders as P
 DIM responseHeaders.includeInsecureHeaders as L
 DIM responseHeaders.additionalHeaders as C
 DIM pdfReferenceDevice as C
-DIM __token as C = "573d9aabacd44a818b999b849caa2f5e"
+DIM __token as C = "8cad6bbd026d4a808e006802ca2aa8ee"
 %txt%
 
 dim gv as p 
@@ -337,10 +337,10 @@ dim gv.__buildNumberExe__ as n
 dim gv.__buildNumberAddins__ as n 
 dim gv.__guid as c 
 dim gv.__A5PublishVersion as n 
-gv.__A5PublishTimestamp = 2024111126081120651
+gv.__A5PublishTimestamp = 2024565626165632544
 gv.__buildNumberExe__ = 8867
 gv.__buildNumberAddins__ = 5691
-gv.__guid = "055da931-e5b3-429c-934d-c1d8b780650c"
+gv.__guid = "1e4f82d7-1e31-49db-871f-6d1164821cbd"
 gv.__control = <<%txtcontrol%
 hV7+2zUTjP0=
 %txtcontrol%
