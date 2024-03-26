@@ -1,0 +1,9 @@
+<aliases=<<%str%
+<arrVars<[1]<name="[PathAlias.ADB_Path]">
+<value="=a5.get_path()">
+<type="C">
+>
+>
+%str%>
+<misc<SecurityGuid="475b87260f8b4d05a2d88f8c8c147999">
+>
