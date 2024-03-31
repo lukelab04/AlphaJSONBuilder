@@ -14,7 +14,7 @@
 
 Dim _aliases_ as c
 _aliases_ = <<%txt%
-[PathAlias.ADB_Path]|C:\Users\lukes\Documents\AlphaAnywhere\Generic JSON Builder
+[PathAlias.ADB_Path]|C:\Users\GuestsofMine\Desktop\Lukes Data\Generic JSON Builder
 %txt%
 
 'Creates a global collection called '_A5_Aliases' 
@@ -326,7 +326,7 @@ DIM responseHeaders as P
 DIM responseHeaders.includeInsecureHeaders as L
 DIM responseHeaders.additionalHeaders as C
 DIM pdfReferenceDevice as C
-DIM __token as C = "8cad6bbd026d4a808e006802ca2aa8ee"
+DIM __token as C = "1ef3882e6e6b42e79480e422573805ae"
 %txt%
 
 dim gv as p 
@@ -337,10 +337,10 @@ dim gv.__buildNumberExe__ as n
 dim gv.__buildNumberAddins__ as n 
 dim gv.__guid as c 
 dim gv.__A5PublishVersion as n 
-gv.__A5PublishTimestamp = 2024565626165632544
-gv.__buildNumberExe__ = 8867
-gv.__buildNumberAddins__ = 5691
-gv.__guid = "1e4f82d7-1e31-49db-871f-6d1164821cbd"
+gv.__A5PublishTimestamp = 2024424230214210839
+gv.__buildNumberExe__ = 8973
+gv.__buildNumberAddins__ = 5696
+gv.__guid = "f99d05b0-5e94-4744-b447-ea766a336217"
 gv.__control = <<%txtcontrol%
 hV7+2zUTjP0=
 %txtcontrol%
