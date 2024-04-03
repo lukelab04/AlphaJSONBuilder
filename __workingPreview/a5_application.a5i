@@ -14,7 +14,7 @@
 
 Dim _aliases_ as c
 _aliases_ = <<%txt%
-[PathAlias.ADB_Path]|C:\Users\GuestsofMine\Desktop\Lukes Data\Generic JSON Builder
+[PathAlias.ADB_Path]|C:\Users\lukes\Documents\AlphaAnywhere\Generic JSON Builder
 %txt%
 
 'Creates a global collection called '_A5_Aliases' 
@@ -109,7 +109,7 @@ DIM fileDownload.allowedFilenamePatterns as C = "*.xls*,*.pdf,*.jpg,*.jpeg,*.bmp
 DIM fileDownload.allowedFolderPatterns as C
 DIM fileDownload.blockedFilenamePatterns as C
 DIM reportServer as P
-DIM reportServer.disable as L
+DIM reportServer.disable as L = .T.
 DIM reportEvents as P
 DIM reportEvents.afterPrint as C
 DIM reportEvents.library as C
@@ -326,7 +326,7 @@ DIM responseHeaders as P
 DIM responseHeaders.includeInsecureHeaders as L
 DIM responseHeaders.additionalHeaders as C
 DIM pdfReferenceDevice as C
-DIM __token as C = "1ef3882e6e6b42e79480e422573805ae"
+DIM __token as C = "57f641fb28144264bf72e79d8791efdb"
 %txt%
 
 dim gv as p 
@@ -337,10 +337,10 @@ dim gv.__buildNumberExe__ as n
 dim gv.__buildNumberAddins__ as n 
 dim gv.__guid as c 
 dim gv.__A5PublishVersion as n 
-gv.__A5PublishTimestamp = 2024424230214210839
-gv.__buildNumberExe__ = 8973
-gv.__buildNumberAddins__ = 5696
-gv.__guid = "f99d05b0-5e94-4744-b447-ea766a336217"
+gv.__A5PublishTimestamp = 2024222203142236144
+gv.__buildNumberExe__ = 8867
+gv.__buildNumberAddins__ = 5691
+gv.__guid = "e169f0b2-8453-4419-bf1d-602e8628d403"
 gv.__control = <<%txtcontrol%
 hV7+2zUTjP0=
 %txtcontrol%
