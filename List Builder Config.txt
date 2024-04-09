@@ -24,9 +24,9 @@
 						label: 'Pagination Options',
 						validate: () => true,
 						show: (inputObj) => {
-							let selected = inputObj.parent.selected(obj, formName);
+							let selected = inputObj.parent.selected();
 							if (selected) {
-								return selected.key('serverSearch').serialize(obj, formName);
+								return selected.key('serverSearch').serialize();
 							}
 							return false;
 						},
@@ -101,23 +101,23 @@
 							inList: singleInput('boolean', 'Show in list?'),
 							inDetailView: singleInput('boolean', 'Show in detail view?'),
 							editType: singleInput('string', 'Editor type to use (datetime, time, etc.) (optional)', {default: undefined}, (inputObj) => {
-								let selected = inputObj.parent.selected(obj, formName);
+								let selected = inputObj.parent.selected();
 								if (selected) {
-									return selected.key('inDetailView').serialize(obj, formName);
+									return selected.key('inDetailView').serialize();
 								}
 								return false;
 							}),
 							width: singleInput('string', 'Width (CSS percentage) (optional)', {default: undefined}, (inputObj) => {
-								let selected = inputObj.parent.selected(obj, formName);
+								let selected = inputObj.parent.selected();
 								if (selected) {
-									return selected.key('inList').serialize(obj, formName)
+									return selected.key('inList').serialize()
 								}
 								return false;
 							}),
 							template: singleInput('string', 'Template (optional)', {default: undefined}, (inputObj) => {
-								let selected = inputObj.parent.selected(obj, formName);
+								let selected = inputObj.parent.selected();
 								if (selected) {
-									return selected.key('inList').serialize(obj, formName);
+									return selected.key('inList').serialize();
 								}
 								return false;
 							}),
@@ -131,9 +131,9 @@
 									formatter: singleInput('function', 'Formatting function', {default: undefined}),
 								}
 							}, (inputObj) => {
-								let selected = inputObj.parent.selected(obj, formName);
+								let selected = inputObj.parent.selected();
 								if (selected) {
-									return selected.key('inList').serialize(obj, formName);
+									return selected.key('inList').serialize();
 								}
 								return false;
 							}),
