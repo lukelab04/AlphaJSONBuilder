@@ -30,7 +30,7 @@
 							}
 							return false;
 						},
-						comments: '',
+						comments: 'Specify options for pagination. Note that this only takes effect if "serverSearch" is enabled.',
 					}),
 					buttons: singleInput('array', 'Define Table Buttons', {
 						default: [],
@@ -40,7 +40,7 @@
 									value: new Value('object', {
 										staticKeys: {
 											title: singleInput('string', 'Button name'),
-											typeToOpen: singleInput('string', 'Panel Type to open'),
+											typeToOpen: singleInput('string', 'Panel Type to open', {}, {comments: 'The Panel Type corresponds to the key name of the panel, defined in "Panels".'}),
 											primaryKey: singleInput('string', 'Primary Key (in this list)'),
 											foreignKey: singleInput('string', 'Foreign Key (in opened list)'),
 										}
@@ -107,26 +107,32 @@
 								displayName: singleInput('string', 'Column display name (optional)', { default: undefined }),
 								inList: singleInput('boolean', 'Show in list?'),
 								inDetailView: singleInput('boolean', 'Show in detail view?'),
-								editType: singleInput('string', 'Editor type to use (datetime, time, etc.) (optional)', { default: undefined }, (inputObj) => {
-									let selected = inputObj.parent.selected();
-									if (selected) {
-										return selected.key('inDetailView').serialize();
+								editType: singleInput('string', 'Editor type to use (datetime, time, etc.) (optional)', { default: undefined }, {
+									show: (inputObj) => {
+										let selected = inputObj.parent.selected();
+										if (selected) {
+											return selected.key('inDetailView').serialize();
+										}
+										return false;
 									}
-									return false;
 								}),
-								width: singleInput('string', 'Width (CSS percentage) (optional)', { default: undefined }, (inputObj) => {
-									let selected = inputObj.parent.selected();
-									if (selected) {
-										return selected.key('inList').serialize()
+								width: singleInput('string', 'Width (CSS percentage) (optional)', { default: undefined }, {
+									show: (inputObj) => {
+										let selected = inputObj.parent.selected();
+										if (selected) {
+											return selected.key('inList').serialize()
+										}
+										return false;
 									}
-									return false;
 								}),
-								template: singleInput('string', 'Template (optional)', { default: undefined }, (inputObj) => {
-									let selected = inputObj.parent.selected();
-									if (selected) {
-										return selected.key('inList').serialize();
+								template: singleInput('string', 'Template (optional)', { default: undefined }, {
+									show: (inputObj) => {
+										let selected = inputObj.parent.selected();
+										if (selected) {
+											return selected.key('inList').serialize();
+										}
+										return false;
 									}
-									return false;
 								}),
 								lookup: singleInput('object', 'Lookup Options (optional)', {
 									default: undefined,
@@ -137,12 +143,14 @@
 										getColumns: singleInput('array', 'Columns to get', { arrayInput: singleInput('string', 'Column Name'), default: undefined }),
 										formatter: singleInput('function', 'Formatting function', { default: undefined }),
 									}
-								}, (inputObj) => {
-									let selected = inputObj.parent.selected();
-									if (selected) {
-										return selected.key('inList').serialize();
+								}, {
+									show: (inputObj) => {
+										let selected = inputObj.parent.selected();
+										if (selected) {
+											return selected.key('inList').serialize();
+										}
+										return false;
 									}
-									return false;
 								}),
 							}
 						})
@@ -150,8 +158,8 @@
 				},
 			}),
 		})),
-		label: "Add keys corresponding to panel types",
-		comments: "",
+		label: "Panels",
+		comments: 'Add keys corresponding to panels. For example, a panel with Customer Information might be called "CustomerPanel", and the key would also be "CustomerPanel".',
 		validate: () => true,
 	});
 
