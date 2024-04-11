@@ -8,6 +8,7 @@
                 input: singleInput('object', 'Data Input Options', {
                     staticKeys: {
                         group: singleInput('object', 'Data Grouping (optional)', {
+                            default: undefined,
                             staticKeys: {
                                 by: singleInput('string', 'Group By')
                             }
