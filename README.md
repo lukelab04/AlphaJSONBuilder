@@ -42,6 +42,11 @@ The `Value` class has a single constructor taking two parameters.
     // The values will follow the Input blueprint described here
     dynamicKeys: Input(...),
 
+    // Optional 
+    // If true, this component will open in a new tab. It will
+    // instead nest itself inside its parent.
+    inline: true,
+
     // -------------------------------------------------------------
     
 
@@ -52,6 +57,11 @@ The `Value` class has a single constructor taking two parameters.
     // User can add elements to an array
     // The added elements will follow this blueprint
     arrayInput: Input(...),
+
+    // Optional 
+    // If true, this component will open in a new tab. It will
+    // instead nest itself inside its parent.
+    inline: true,
 
     // -------------------------------------------------------------
 }
@@ -106,12 +116,12 @@ this format.
 ```
 
 The `Input` object also has two static helper functions.
-- `singleInput(type, label, options, show?)`
+- `singleInput(type, label, valueOptions, inputOptions)`
     - Arguments
         - `type`: string, corresponds to `Value` type
         - `label`: string, used in label field
-        - `options`: options to pass to `Value` constructor
-        - `show`: optional, used in show field
+        - `valueOptions`: options to pass to `Value` constructor
+        - `inputOptions`: optional, can specify fields like `show` or `comments`
     - This function returns an instance of `Input` with one single element in the `values` array, saving a lot of boilerplate typing.
 
 - `singleType(value)`
@@ -135,7 +145,7 @@ let myForm = new Input({
 });
 
 // Alternatively, using the singleInput helper,
-let myForm = singleInput('string', 'My String Input');
+let myForm = Input.singleInput('string', 'My String Input');
 ```
 #### Result
 ![](./doc_images/single_string.png)
@@ -149,10 +159,10 @@ out `'string'` for `'boolean'` or whichever other input type you want.
 
 ```js
 let myForm = new Input({
-    values: singleValue(new Value('object', {
+    values: Input.singleValue(new Value('object', {
             staticKeys: {
-                key1: singleInput('string', 'Key1 String Input'),
-                key2: singleInput('boolean', 'Key2 Boolean Input'),
+                key1: Input.singleInput('string', 'Key1 String Input'),
+                key2: Input.singleInput('boolean', 'Key2 Boolean Input'),
             }
         })
     ),
@@ -170,8 +180,8 @@ let myForm = new Input({
 ### Single Array Input
 ```js
 let myForm = new Input({
-    values: singleValue(new Value('array', {
-        arrayInput: singleInput('string', 'String array element'),
+    values: Input.singleValue(new Value('array', {
+        arrayInput: Input.singleInput('string', 'String array element'),
     })),
     label: 'My array input',
     comments: '',
@@ -210,11 +220,14 @@ let myForm = new Input({
 --- 
 
 ### Object with Dynamic Keys
-Say we want to model a JSON object that accepts arbitrary keys associated with string values.
+Say our JSON data is of the form `{countryName1: boolean, countryName2: boolean, ...}`, maybe representing whether or not shipping is available. Obviously, it is impractical (and in some situations, impossible) to 
+input every single possible key value statically. So, we use *Dynamic Keys*, which allow a user to input their own key value. Dynamic Keys are associated with a particular 
+input, which will be copied to each new dynamic key.
+
 ```js
-let myForm = singleInput('object', 'Enter Keys', {
+let myForm = Input.singleInput('object', 'Enter a Country', {
     staticKeys: {},
-    dynamicKeys: singleInput('string', 'Enter a value')
+    dynamicKeys: Input.singleInput('boolean', 'Shipping is available?')
 });
 ```
 
@@ -228,7 +241,7 @@ let myForm = singleInput('object', 'Enter Keys', {
 Say we want a text field that defaults to the number `0` if no text is entered.
 ```js
 let myForm = new Input({
-    values: singleValue(new Value('string', {
+    values: Input.singleValue(new Value('string', {
         default: 0,
     })),
     label: 'Enter a value (optional)',
@@ -236,6 +249,7 @@ let myForm = new Input({
     validate: () => true,
 });
 ```
+When serialized, if no value was input, we will get `0`.
 
 ---
 
@@ -246,11 +260,11 @@ is selected.
 In this example, we make use of the `parent` field of our `Input` object, which (as you might expect) points to the parent of our object.
 
 ```js
-let myForm = singleInput('object', 'Demo Object', {
+let myForm = Input.singleInput('object', 'Demo Object', {
     staticKeys: {
-        checkbox: singleInput('boolean', 'Check me to hide the textbox'),
+        checkbox: Input.singleInput('boolean', 'Check me to hide the textbox'),
         textbox: new Input({
-            values: singleValue(new Value('string')),
+            values: Input.singleValue(new Value('string')),
             label: 'I will be hidden if checkbox is selected',
             comments: '',
             validate: () => true,
@@ -259,11 +273,10 @@ let myForm = singleInput('object', 'Demo Object', {
                 // is the 'Demo Object' object
                 let p = inputObj.parent;
                 if (p) {
+                    // Recall that Inputs can have multiple values. 
+                    // Therefore, we need '.selected()' to select this specific value.
                     // 'checkbox' field will be true or false.
-                    // serialize expects a reference to the Dialog object 
-                    // and the name of the form we are building. 
-                    // This will change soon to be implicit.
-                    return !p.serialize({dialog.object}, 'my form name').checkbox;
+                    return !p.selected().key('checkbox').serialize();
                 }
                 return false;
             }
@@ -274,3 +287,42 @@ let myForm = singleInput('object', 'Demo Object', {
 
 ![](./doc_images/show_hide_1.png)
 ![](./doc_images/show_hide_2.png)
+
+
+--- 
+
+### Comments 
+If your data requires some explanation, it might be useful to leave a comment. 
+These are specified per-input. 
+```js
+let myForm = Input.singleInput(
+    'string', 
+    'String With Comment', 
+    {},
+    {comments: 'Some useful information here!'}
+);
+```
+Note that we are using the `singleInput` function, which expects *value options* as the third argument. We have no value options, so we just pass in an empty object.
+
+![](./doc_images/comments.png)
+
+--- 
+
+### Validation 
+Sometimes, specifying the type of the input isn't enough. The `validate` function accepts serialized data and allows you to perform your own checks on it. If the data does not pass, throw an error.
+
+```js
+let myForm = Input.singleInput(
+    'string',
+    'Enter any string but "Hello"',
+    {},
+    {
+        validate: (data) => {
+            if (data === 'Hello') 
+                throw new Error('Value cannot be "Hello"')
+        }
+    }
+);
+```
+If the user enters bad data, they will be shown an error message when they attempt to save the form. 
+![](./doc_images/validate.png)
